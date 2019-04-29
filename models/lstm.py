@@ -8,7 +8,7 @@ from keras.optimizers import Adam
 from numpy import ndarray
 from sklearn.metrics import mean_squared_error
 
-from models.model_utils import plot_model_loss
+from models.model_utils import plot_model_loss, plot_real_vs_predicted_values
 
 
 class LstmModel:
@@ -33,10 +33,15 @@ class LstmModel:
                                  shuffle=1,
                                  callbacks=[self.ea],
                                  validation_split=0.1).history
-        plot_model_loss(history, 'LSTM')
+        mse = self.get_mse()
+        plot_model_loss(history, 'LSTM', mse)
 
-    def print_mse(self):
+    def get_mse(self):
         y_predicted = self.model.predict(self.x_test)
         y_predicted = y_predicted.reshape((self.y_test.shape[0], self.y_test.shape[1]))
-        mse = mean_squared_error(self.y_test.reshape((self.y_test.shape[0], self.y_test.shape[1])), y_predicted)
-        print("Test MSE = ", mse)
+        return mean_squared_error(self.y_test.reshape((self.y_test.shape[0], self.y_test.shape[1])), y_predicted)
+
+    def plot_real_vs_predicted(self):
+        y_predicted = self.model.predict(self.x_test)
+        y_predicted = y_predicted.reshape((self.y_test.shape[0], self.y_test.shape[1]))
+        plot_real_vs_predicted_values(self.y_test.reshape((self.y_test.shape[0], self.y_test.shape[1])), y_predicted, 'LSTM')

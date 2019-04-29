@@ -1,13 +1,11 @@
 import os
 
+import numpy as np
 from sklearn.model_selection import train_test_split
 
 import models.preprocessing as pp
-from models.dnn import DnnModel
 from models.cnn_1d import Cnn1DModel
-
-import numpy as np
-
+from models.dnn import DnnModel
 from models.lstm import LstmModel
 
 path = 'data/'
@@ -35,14 +33,14 @@ y_normalized, y_scaler = pp.normalize(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.25, random_state=1337)
 
-"""dnn = DnnModel(x_train, y_train, x_test, y_test)
+dnn = DnnModel(x_train, y_train, x_test, y_test)
 dnn.fit()
-dnn.print_mse()
+dnn.plot_real_vs_predicted()
 
 cnn = Cnn1DModel(x_train, y_train, x_test, y_test)
 cnn.fit()
-cnn.print_mse()"""
+cnn.plot_real_vs_predicted()
 
 lstm = LstmModel(x_train, y_train, x_test, y_test)
 lstm.fit()
-lstm.print_mse()
+lstm.plot_real_vs_predicted()

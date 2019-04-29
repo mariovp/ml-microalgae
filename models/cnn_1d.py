@@ -8,6 +8,7 @@ from numpy import ndarray
 from sklearn.metrics import mean_squared_error
 
 from models.model_utils import plot_model_loss
+from models.model_utils import plot_real_vs_predicted_values
 
 
 class Cnn1DModel:
@@ -32,10 +33,14 @@ class Cnn1DModel:
         history = self.model.fit(self.x_train, self.y_train, epochs=150, batch_size=16, verbose=1,
                                  shuffle=1,
                                  callbacks=[self.ea],
-                                 validation_data=(self.x_test, self.y_test)).history
-        plot_model_loss(history, 'CNN')
+                                 validation_split=0.1).history
+        mse = self.get_mse()
+        plot_model_loss(history, 'CNN', mse)
 
-    def print_mse(self):
+    def get_mse(self):
         y_predicted = self.model.predict(self.x_test)
-        mse = mean_squared_error(self.y_test, y_predicted)
-        print("Test MSE = ", mse)
+        return mean_squared_error(self.y_test, y_predicted)
+
+    def plot_real_vs_predicted(self):
+        y_predicted = self.model.predict(self.x_test)
+        plot_real_vs_predicted_values(self.y_test, y_predicted, 'CNN')
