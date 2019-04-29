@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 
 
-def plot_model_loss(history_model):
-    plt.plot(history_model['loss'], linewidth=2, label='Train')
-    plt.plot(history_model['val_loss'], linewidth=2, label='Test')
+def plot_model_loss(model_history, model_title):
+    plt.plot(model_history['loss'], linewidth=2, label='Train')
+    plt.plot(model_history['val_loss'], linewidth=2, label='Test')
     plt.legend(loc='upper right')
-    plt.title('CNN model loss')
+    plt.title(model_title+' model loss')
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
     plt.show()

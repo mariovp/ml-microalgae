@@ -3,6 +3,7 @@ import os
 from sklearn.model_selection import train_test_split
 
 import models.preprocessing as pp
+from models.dnn import DnnModel
 from models.cnn_1d import Cnn1DModel
 
 import numpy as np
@@ -31,6 +32,10 @@ x_normalized, x_scaler = pp.normalize(x)
 y_normalized, y_scaler = pp.normalize(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.30, random_state=1337)
+
+dnn = DnnModel(x_train, y_train, x_test, y_test)
+dnn.fit()
+dnn.print_mse()
 
 cnn = Cnn1DModel(x_train, y_train, x_test, y_test)
 cnn.fit()
