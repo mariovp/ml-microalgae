@@ -5,9 +5,9 @@ from keras.layers.convolutional import Conv1D
 from keras.layers.convolutional import MaxPooling1D
 from keras.models import Sequential
 from numpy import ndarray
+from sklearn.metrics import mean_squared_error
 
 from models.model_utils import plot_model_loss
-from sklearn.metrics import mean_squared_error
 
 
 class Cnn1DModel:
