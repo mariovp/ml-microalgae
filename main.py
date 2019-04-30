@@ -4,9 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 import models.preprocessing as pp
-from models.cnn_1d import Cnn1DModel
-from models.dnn import DnnModel
-from models.lstm import LstmModel
+from models.knn import KnnModel
 
 path = 'data/'
 
@@ -33,7 +31,7 @@ y_normalized, y_scaler = pp.normalize(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.25, random_state=1337)
 
-dnn = DnnModel(x_train, y_train, x_test, y_test)
+"""dnn = DnnModel(x_train, y_train, x_test, y_test)
 dnn.fit()
 dnn.plot_real_vs_predicted()
 
@@ -43,4 +41,7 @@ cnn.plot_real_vs_predicted()
 
 lstm = LstmModel(x_train, y_train, x_test, y_test)
 lstm.fit()
-lstm.plot_real_vs_predicted()
+lstm.plot_real_vs_predicted()"""
+
+knn = KnnModel(x_train, y_train, x_test, y_test)
+knn.grid_search_optimization()

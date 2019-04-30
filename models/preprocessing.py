@@ -27,7 +27,6 @@ def fill_non_interpolable_data(_dataframe):
 
 def slide_window(_dataframe):
     _size = _dataframe.shape[0]
-    print(_size)
     _dataframe = _dataframe.drop(columns=['day'])
     _x = _dataframe.loc[0:_size - 2, :]
     _y = _dataframe.loc[1:_size, ['Carbohydrates']]
