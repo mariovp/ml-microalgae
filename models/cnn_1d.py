@@ -13,11 +13,12 @@ from models.model_utils import plot_real_vs_predicted_values
 
 class Cnn1DModel:
 
-    def __init__(self, x_train: ndarray, y_train: ndarray, x_test: ndarray, y_test: ndarray):
+    def __init__(self, x_train: ndarray, y_train: ndarray, x_test: ndarray, y_test: ndarray, y_scaler):
         self.x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
         self.y_train = y_train
         self.x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
         self.y_test = y_test
+        self.y_scaler = y_scaler
 
         self.model = Sequential()
         self.model.add(Conv1D(filters=30, kernel_size=3, activation='relu'))
@@ -26,6 +27,8 @@ class Cnn1DModel:
         self.model.add(Dense(10, activation='relu'))
         self.model.add(Dense(1))
         self.model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+
+        print(type(self.model))
 
         self.ea = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
@@ -43,4 +46,8 @@ class Cnn1DModel:
 
     def plot_real_vs_predicted(self):
         y_predicted = self.model.predict(self.x_test)
+
+        self.y_test = self.y_scaler.inverse_transform(self.y_test)
+        y_predicted = self.y_scaler.inverse_transform(y_predicted)
+
         plot_real_vs_predicted_values(self.y_test, y_predicted, 'CNN')
