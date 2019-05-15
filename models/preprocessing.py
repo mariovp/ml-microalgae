@@ -33,6 +33,17 @@ def slide_window(_dataframe):
     return _x, _y
 
 
+"""
+def slide_window(_dataframe):
+    _size = _dataframe.shape[0]
+    _dataframe = _dataframe.drop(columns=['day'])
+    _y = _dataframe.loc[0:_size - 2, ['Carbohydrates']]
+    _dataframe = _dataframe.drop(columns=['Carbohydrates'])
+    _x = _dataframe.loc[0:_size - 2, :]
+    return _x, _y
+"""
+
+
 def normalize(_dataframe):
     _scaler = MinMaxScaler()
     _scaler.fit(_dataframe)

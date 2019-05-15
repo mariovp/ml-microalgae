@@ -49,9 +49,15 @@ class BaseModel(ABC):
         mse = self.get_mse()
         plot_model_loss(history, self.name, mse)
 
-    def plot_real_vs_predicted(self):
+    def plot_real_vs_predicted_normalized(self):
         y_predicted = self.predict(self.x_test)
         plot_real_vs_predicted_values(self.y_test, y_predicted, self.name)
+
+    def plot_real_vs_predicted(self):
+        y_predicted = self.predict(self.x_test)
+        y_predicted_descaled = self.y_scaler.inverse_transform(y_predicted)
+        y_real_descaled = self.y_scaler.inverse_transform(self.y_test)
+        plot_real_vs_predicted_values(y_real_descaled, y_predicted_descaled, self.name)
 
     def reshape_x_model(self, x_array: ndarray) -> ndarray:
         return x_array

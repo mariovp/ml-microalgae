@@ -1,7 +1,7 @@
 from typing import NamedTuple
 
 from numpy import ndarray
-from sklearn.base import BaseEstimator
+from sklearn.preprocessing import MinMaxScaler
 
 
 class ModelData(NamedTuple):
@@ -18,5 +18,5 @@ class ModelData(NamedTuple):
     x_test: ndarray
     y_train: ndarray
     y_test: ndarray
-    x_scaler: BaseEstimator
-    y_scaler: BaseEstimator
+    x_scaler: MinMaxScaler
+    y_scaler: MinMaxScaler
