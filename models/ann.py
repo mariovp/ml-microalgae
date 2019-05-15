@@ -1,14 +1,34 @@
-from keras.callbacks import EarlyStopping
+from keras import Model
+from keras.callbacks import EarlyStopping, History
 from keras.layers import Dense
 from keras.models import Sequential
-from numpy import ndarray
-from sklearn.metrics import mean_squared_error
 
-from models.model_utils import plot_model_loss
-from models.model_utils import plot_real_vs_predicted_values
+from models.base_model import BaseModel
 
 
-class DnnModel:
+class AnnModel(BaseModel):
+    name = 'ANN'
+
+    def build_model(self) -> Model:
+        model = Sequential()
+        model.add(Dense(2, activation='relu'))
+        model.add(Dense(50, activation='relu'))
+        model.add(Dense(1))
+        model.compile(optimizer='adadelta', loss='mean_squared_error', metrics=['accuracy'])
+        return model
+
+    def fit(self) -> History:
+        ea = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+        return self.model.fit(self.x_train, self.y_train,
+                              epochs=150,
+                              batch_size=64,
+                              verbose=1,
+                              shuffle=1,
+                              callbacks=[ea],
+                              validation_split=0.1).history
+
+
+"""class DnnModel:
 
     def __init__(self, x_train: ndarray, y_train: ndarray, x_test: ndarray, y_test: ndarray):
         self.x_train = x_train
@@ -39,4 +59,4 @@ class DnnModel:
 
     def plot_real_vs_predicted(self):
         y_predicted = self.model.predict(self.x_test)
-        plot_real_vs_predicted_values(self.y_test, y_predicted, 'DNN')
+        plot_real_vs_predicted_values(self.y_test, y_predicted, 'DNN')"""

@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from keras import Model
-from keras.callbacks import History
 from numpy import ndarray
 from sklearn.metrics import mean_squared_error
 
@@ -24,16 +22,17 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    def build_model(self) -> Model:
+    def build_model(self):
         pass
 
     @abstractmethod
-    def fit(self) -> History:
+    def fit(self):
         pass
 
     def train(self):
         history = self.fit()
-        self.plot_model_loss(history)
+        if history is not None:
+            self.plot_model_loss(history)
         self.plot_real_vs_predicted()
 
     def predict(self, x_predict: ndarray) -> ndarray:

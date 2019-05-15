@@ -24,7 +24,6 @@ class Cnn1DModel(BaseModel):
         return model
 
     def fit(self) -> History:
-        print("fit CNN...")
         ea = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
         return self.model.fit(self.reshape_x_model(self.x_train), self.y_train,
                               epochs=150,
