@@ -33,13 +33,17 @@ class BaseModel(ABC):
 
     def train(self):
         history = self.fit()
-        mse = self.get_mse()
-        plot_model_loss(history, self.name, mse)
+        self.plot_model_loss(history)
+        self.plot_real_vs_predicted()
 
     def predict(self, x_predict: ndarray) -> ndarray:
         x_predict = self.reshape_x_model(x_predict)
         y_predicted = self.model.predict(x_predict)
         return self.reshape_y_original(y_predicted)
+
+    def plot_model_loss(self, history):
+        mse = self.get_mse()
+        plot_model_loss(history, self.name, mse)
 
     def plot_real_vs_predicted(self):
         y_predicted = self.predict(self.x_test)
