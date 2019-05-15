@@ -8,6 +8,7 @@ from models.ann import AnnModel
 from models.cnn_1d import Cnn1DModel
 from models.knn import KnnModel
 from models.lstm import LstmModel
+from models.model_data import ModelData
 
 path = 'data/'
 
@@ -34,15 +35,17 @@ y_normalized, y_scaler = pp.normalize(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.25, random_state=1337)
 
-ann = AnnModel(x_train, x_test, y_train, y_test)
+model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler)
+
+ann = AnnModel(model_data)
 ann.train()
 
-cnn = Cnn1DModel(x_train, x_test, y_train, y_test)
+cnn = Cnn1DModel(model_data)
 cnn.train()
 
-lstm = LstmModel(x_train, x_test, y_train, y_test)
+lstm = LstmModel(model_data)
 lstm.train()
 
-knn = KnnModel(x_train, x_test, y_train, y_test)
+knn = KnnModel(model_data)
 knn.grid_search_optimization()
 

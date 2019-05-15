@@ -3,17 +3,22 @@ from abc import ABC, abstractmethod
 from numpy import ndarray
 from sklearn.metrics import mean_squared_error
 
+from models.model_data import ModelData
 from models.model_utils import plot_model_loss, plot_real_vs_predicted_values
 
 
 class BaseModel(ABC):
 
-    def __init__(self, x_train: ndarray, x_test: ndarray, y_train: ndarray, y_test: ndarray) -> None:
+    def __init__(self, model_data: ModelData) -> None:
         super().__init__()
-        self.x_train = x_train
-        self.x_test = x_test
-        self.y_train = y_train
-        self.y_test = y_test
+
+        self.x_train = model_data.x_train
+        self.x_test = model_data.x_test
+        self.y_train = model_data.y_train
+        self.y_test = model_data.y_test
+        self.x_scaler = model_data.x_scaler
+        self.y_scaler = model_data.y_scaler
+
         self.model = self.build_model()
 
     @property
