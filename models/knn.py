@@ -41,4 +41,4 @@ class KnnModel(BaseModel):
         print("Re-training with best parameters for test")
         self.model = neighbors.KNeighborsRegressor(best_k, weights=best_weights)
         self.model.fit(self.x_train, self.y_train)
-        self.plot_real_vs_predicted()
+        self.plot_real_vs_predicted(best_mse)

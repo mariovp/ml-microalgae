@@ -26,7 +26,7 @@ def fill_non_interpolable_data(_dataframe):
 
 
 def slide_window(_dataframe):
-    return slide_window_carbohydrate_target_registry_next(_dataframe, False)
+    return slide_window_carbohydrate_target_registry_same(_dataframe)
 
 
 def slide_window_carbohydrate_target_registry_next(_dataframe, use_current_carbohydrates=True):

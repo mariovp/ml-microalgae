@@ -34,11 +34,12 @@ class BaseModel(ABC):
     def fit(self):
         pass
 
-    def train(self):
+    def train(self, show_history=False):
         history = self.fit()
-        if history is not None:
+        if show_history and history is not None:
             self.plot_model_loss(history)
-        self.plot_real_vs_predicted()
+        mse = self.get_mse()
+        self.plot_real_vs_predicted(mse)
 
     def predict(self, x_predict: ndarray) -> ndarray:
         x_predict = self.reshape_x_model(x_predict)
@@ -46,18 +47,17 @@ class BaseModel(ABC):
         return self.reshape_y_original(y_predicted)
 
     def plot_model_loss(self, history):
-        mse = self.get_mse()
-        plot_model_loss(history, self.name, mse)
+        plot_model_loss(history, self.name)
 
-    def plot_real_vs_predicted_normalized(self):
+    def plot_real_vs_predicted_normalized(self, mse):
         y_predicted = self.predict(self.x_test)
-        plot_real_vs_predicted_values(self.y_test, y_predicted, self.name)
+        plot_real_vs_predicted_values(self.y_test, y_predicted, self.name, mse)
 
-    def plot_real_vs_predicted(self):
+    def plot_real_vs_predicted(self, mse):
         y_predicted = self.predict(self.x_test)
         y_predicted_descaled = self.y_scaler.inverse_transform(y_predicted)
         y_real_descaled = self.y_scaler.inverse_transform(self.y_test)
-        plot_real_vs_predicted_values(y_real_descaled, y_predicted_descaled, self.name)
+        plot_real_vs_predicted_values(y_real_descaled, y_predicted_descaled, self.name, mse)
 
     def reshape_x_model(self, x_array: ndarray) -> ndarray:
         return x_array

@@ -4,7 +4,10 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 import models.preprocessing as pp
+from models.ann import AnnModel
+from models.cnn_1d import Cnn1DModel
 from models.decision_tree import DecisionTree
+from models.knn import KnnModel
 from models.model_data import ModelData
 # random.seed(1337)
 from models.random_forest import RandomForest
@@ -36,8 +39,14 @@ x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, 
 
 model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler)
 
-# ann = AnnModel(model_data)
-# ann.train()
+ann = AnnModel(model_data)
+ann.train()
+
+cnn = Cnn1DModel(model_data)
+cnn.train()
+
+knn = KnnModel(model_data)
+knn.grid_search_optimization()
 
 dt = DecisionTree(model_data)
 dt.train()
@@ -46,12 +55,6 @@ rf = RandomForest(model_data)
 rf.train()
 
 """
-cnn = Cnn1DModel(model_data)
-cnn.train()
-
 lstm = LstmModel(model_data)
 lstm.train()
-
-knn = KnnModel(model_data)
-knn.grid_search_optimization()
 """
