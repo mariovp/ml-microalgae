@@ -7,6 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 class ModelData(NamedTuple):
     """A data container for models
     Attributes:
+    -----------
         x_train: Training data
         x_test: Test data
         y_train: Training targets

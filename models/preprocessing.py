@@ -26,22 +26,27 @@ def fill_non_interpolable_data(_dataframe):
 
 
 def slide_window(_dataframe):
+    return slide_window_carbohydrate_target_registry_next(_dataframe, False)
+
+
+def slide_window_carbohydrate_target_registry_next(_dataframe, use_current_carbohydrates=True):
     _size = _dataframe.shape[0]
     _dataframe = _dataframe.drop(columns=['day'])
-    _x = _dataframe.loc[0:_size - 2, :]
     _y = _dataframe.loc[1:_size, ['Carbohydrates']]
+    if not use_current_carbohydrates:
+        # drop carbohydrate from X
+        _dataframe = _dataframe.drop(columns=['Carbohydrates'])
+    _x = _dataframe.loc[0:_size - 2, :]
     return _x, _y
 
 
-"""
-def slide_window(_dataframe):
+def slide_window_carbohydrate_target_registry_same(_dataframe):
     _size = _dataframe.shape[0]
     _dataframe = _dataframe.drop(columns=['day'])
-    _y = _dataframe.loc[0:_size - 2, ['Carbohydrates']]
+    _y = _dataframe.loc[1:_size, ['Carbohydrates']]
     _dataframe = _dataframe.drop(columns=['Carbohydrates'])
     _x = _dataframe.loc[0:_size - 2, :]
     return _x, _y
-"""
 
 
 def normalize(_dataframe):
@@ -49,4 +54,3 @@ def normalize(_dataframe):
     _scaler.fit(_dataframe)
     _array_scaled = _scaler.transform(_dataframe)
     return _array_scaled, _scaler
-
