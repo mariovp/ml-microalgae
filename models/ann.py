@@ -12,17 +12,17 @@ class AnnModel(BaseModel):
     def build_model(self) -> Model:
         model = Sequential()
         model.add(Dense(2, activation='relu'))
-        model.add(Dense(50, activation='relu'))
-        model.add(Dense(1))
-        model.compile(optimizer='adadelta', loss='mean_squared_error', metrics=['accuracy'])
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(20, activation='relu'))
+        model.add(Dense(1, activation='sigmoid'))
+        model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
         return model
 
     def fit(self) -> History:
-        ea = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+        ea = EarlyStopping(monitor='loss', patience=20, restore_best_weights=True)
         return self.model.fit(self.x_train, self.y_train,
-                              epochs=150,
-                              batch_size=64,
+                              epochs=1500,
+                              batch_size=16,
                               verbose=1,
                               shuffle=1,
-                              callbacks=[ea],
-                              validation_split=0.1).history
+                              callbacks=[ea]).history

@@ -8,7 +8,7 @@ class RandomForest(BaseModel):
     name = 'Random Forest'
 
     def build_model(self):
-        return RandomForestRegressor(n_estimators=100, random_state=0)
+        return RandomForestRegressor(n_estimators=150, random_state=0)
 
     def fit(self):
         self.model.fit(self.x_train, self.reshape_y_model(self.y_train))

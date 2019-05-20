@@ -15,23 +15,23 @@ class Cnn1DModel(BaseModel):
 
     def build_model(self) -> Model:
         model = Sequential()
-        model.add(Conv1D(filters=30, kernel_size=3, activation='relu'))
+        model.add(Conv1D(filters=32, kernel_size=3, activation='relu'))
         model.add(MaxPooling1D(pool_size=2))
         model.add(Flatten())
-        model.add(Dense(10, activation='relu'))
+        model.add(Dense(16, activation='relu'))
+        model.add(Dense(16, activation='relu'))
         model.add(Dense(1))
-        model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
+        model.compile(optimizer='adadelta', loss='mean_squared_error', metrics=['accuracy'])
         return model
 
     def fit(self) -> History:
-        ea = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+        ea = EarlyStopping(monitor='loss', patience=10, restore_best_weights=True)
         return self.model.fit(self.reshape_x_model(self.x_train), self.y_train,
-                              epochs=150,
+                              epochs=500,
                               batch_size=16,
                               verbose=1,
                               shuffle=1,
-                              callbacks=[ea],
-                              validation_split=0.1).history
+                              callbacks=[ea]).history
 
     def reshape_x_model(self, x_array: ndarray) -> ndarray:
         return x_array.reshape((x_array.shape[0], x_array.shape[1], 1))
