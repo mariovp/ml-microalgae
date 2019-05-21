@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
 from numpy import ndarray
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 from models.model_data import ModelData
-from models.model_utils import plot_model_loss, plot_real_vs_predicted_values, plot_bokeh
+from models.model_utils import plot_model_loss, plot_real_vs_predicted_values, plot_bokeh, metric_to_string
 
 
 class BaseModel(ABC):
@@ -38,8 +38,6 @@ class BaseModel(ABC):
         history = self.fit()
         if show_history and history is not None:
             self.plot_model_loss(history)
-        mse = self.get_mse()
-        self.plot_real_vs_predicted(mse)
 
     def predict(self, x_predict: ndarray) -> ndarray:
         x_predict = self.reshape_x_model(x_predict)
@@ -74,3 +72,20 @@ class BaseModel(ABC):
     def get_mse(self):
         y_predicted = self.predict(self.reshape_x_model(self.x_test))
         return mean_squared_error(self.y_test, y_predicted)
+
+    def evaluate(self):
+        y_predicted = self.predict(self.reshape_x_model(self.x_test))
+
+        mse = mean_squared_error(self.y_test, y_predicted)
+        mae = mean_absolute_error(self.y_test, y_predicted)
+        r2 = r2_score(self.y_test, y_predicted)
+
+        print()
+        print("<Model Evaluation>")
+        print(self.name)
+        print("MSE = " + metric_to_string(mse))
+        print("MAE = " + metric_to_string(mae))
+        print("R2 Score = " + metric_to_string(r2))
+
+        self.plot_real_vs_predicted(mse)
+

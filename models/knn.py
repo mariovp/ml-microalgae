@@ -12,7 +12,7 @@ class KnnModel(BaseModel):
         return KNeighborsRegressor(8, weights='uniform')
 
     def fit(self):
-        self.model.fit(self.x_train, self.y_train)
+        self.grid_search_optimization()
 
     def grid_search_optimization(self):
         optimization_log = list()

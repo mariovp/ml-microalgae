@@ -39,16 +39,22 @@ x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, 
 model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler)
 
 ann = AnnModel(model_data)
-ann.train()
-
 cnn = Cnn1DModel(model_data)
-cnn.train()
-
 knn = KnnModel(model_data)
-knn.grid_search_optimization()
-
 rf = RandomForest(model_data)
-rf.train()
+
+models = list()
+
+models.append(ann)
+models.append(cnn)
+models.append(knn)
+models.append(rf)
+
+for model in models:
+    model.train()
+
+for model in models:
+    model.evaluate()
 
 """
 lstm = LstmModel(model_data)

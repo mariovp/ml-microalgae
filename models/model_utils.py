@@ -28,8 +28,7 @@ def plot_real_vs_predicted_values(_real, _predicted, _model_title, _mse):
 
 
 def plot_bokeh(_real, _predicted, _model_title, _mse):
-    # output to static HTML file
-    output_file(_model_title+".html")
+    output_file("plots/"+_model_title+".html")
 
     x = np.arange(0, _real.shape[0])
     _real = _real.reshape((_real.shape[0]))
@@ -45,3 +44,7 @@ def plot_bokeh(_real, _predicted, _model_title, _mse):
     s1.triangle(x, _predicted, size=10, color="orange", alpha=0.5, legend=_model_title)
 
     show(s1)
+
+
+def metric_to_string(metric):
+    return str(round(metric, 4))
