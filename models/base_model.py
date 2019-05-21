@@ -4,7 +4,7 @@ from numpy import ndarray
 from sklearn.metrics import mean_squared_error
 
 from models.model_data import ModelData
-from models.model_utils import plot_model_loss, plot_real_vs_predicted_values
+from models.model_utils import plot_model_loss, plot_real_vs_predicted_values, plot_bokeh
 
 
 class BaseModel(ABC):
@@ -57,7 +57,7 @@ class BaseModel(ABC):
         y_predicted = self.predict(self.x_test)
         y_predicted_descaled = self.y_scaler.inverse_transform(y_predicted)
         y_real_descaled = self.y_scaler.inverse_transform(self.y_test)
-        plot_real_vs_predicted_values(y_real_descaled, y_predicted_descaled, self.name, mse)
+        plot_bokeh(y_real_descaled, y_predicted_descaled, self.name, mse)
 
     def reshape_x_model(self, x_array: ndarray) -> ndarray:
         return x_array

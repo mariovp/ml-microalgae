@@ -1,3 +1,4 @@
+bokeh
 pandas
 sklearn
 numpy

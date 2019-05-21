@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 import models.preprocessing as pp
 from models.ann import AnnModel
 from models.cnn_1d import Cnn1DModel
-from models.decision_tree import DecisionTree
 from models.knn import KnnModel
 from models.model_data import ModelData
 # random.seed(1337)
@@ -48,13 +47,13 @@ cnn.train()
 knn = KnnModel(model_data)
 knn.grid_search_optimization()
 
-dt = DecisionTree(model_data)
-dt.train()
-
 rf = RandomForest(model_data)
 rf.train()
 
 """
 lstm = LstmModel(model_data)
 lstm.train()
+
+dt = DecisionTree(model_data)
+dt.train()
 """
