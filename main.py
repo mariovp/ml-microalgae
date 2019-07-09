@@ -7,8 +7,9 @@ import models.preprocessing as pp
 from models.ann import AnnModel
 from models.cnn_1d import Cnn1DModel
 from models.knn import KnnModel
+from models.lstm import LstmModel
 from models.model_data import ModelData
-# random.seed(1337)
+from models.model_utils import plot_comparison
 from models.random_forest import RandomForest
 
 path = 'data/'
@@ -40,6 +41,7 @@ model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler)
 
 ann = AnnModel(model_data)
 cnn = Cnn1DModel(model_data)
+lstm = LstmModel(model_data)
 knn = KnnModel(model_data)
 rf = RandomForest(model_data)
 
@@ -47,6 +49,7 @@ models = list()
 
 models.append(ann)
 models.append(cnn)
+models.append(lstm)
 models.append(knn)
 models.append(rf)
 
@@ -56,10 +59,4 @@ for model in models:
 for model in models:
     model.evaluate()
 
-"""
-lstm = LstmModel(model_data)
-lstm.train()
-
-dt = DecisionTree(model_data)
-dt.train()
-"""
+plot_comparison(ann, cnn, lstm, knn, rf)

@@ -46,5 +46,47 @@ def plot_bokeh(_real, _predicted, _model_title, _mse):
     show(s1)
 
 
+def plot_comparison(ann, cnn, lstm, knn, rf):
+
+    output_file("plots/comparison.html")
+
+    x_test = ann.x_test
+    shape = (x_test.shape[0])
+    y_real = ann.y_test.reshape(shape)
+
+    y_predicted_ann = ann.predict(x_test).reshape(shape)
+    y_predicted_cnn = cnn.predict(x_test).reshape(shape)
+    y_predicted_lstm = lstm.predict(x_test).reshape(shape)
+    y_predicted_knn = knn.predict(x_test).reshape(shape)
+    y_predicted_rf = rf.predict(x_test).reshape(shape)
+
+    x_range = np.arange(0, shape)
+
+    title = "Real vs model predictions"
+
+    # Initialize plot
+    plot = figure(width=800, plot_height=600, title=title, x_axis_label='Observation #', y_axis_label='Carbohydrates %')
+    # Add real values
+    plot.line(x_range, y_real, color="green")
+    plot.circle(x_range, y_real, legend="Real", fill_color="green", line_color="green", size=6)
+    # Add ANN predictions
+    # plot.line(x_range, y_predicted_ann, color="blue", line_dash="4 4")
+    plot.triangle(x_range, y_predicted_ann, size=10, color="blue", alpha=0.5, legend="ANN")
+    # Add CNN predictions
+    # plot.line(x_range, y_predicted_cnn, color="yellow", line_dash="4 4")
+    plot.square(x_range, y_predicted_cnn, size=10, color="yellow", alpha=0.5, legend="CNN")
+    # Add LSTM preditions
+    # plot.line(x_range, y_predicted_lstm, color="orange", line_dash="4 4")
+    plot.square(x_range, y_predicted_lstm, size=10, color="orange", alpha=0.5, legend="LSTM")
+    # Add KNN predictions
+    # plot.line(x_range, y_predicted_knn, color="purple", line_dash="4 4")
+    plot.circle(x_range, y_predicted_knn, size=10, color="purple", alpha=0.5, legend="KNN")
+    # Add RF predictions
+    # plot.line(x_range, y_predicted_rf, color="red", line_dash="4 4")
+    plot.triangle(x_range, y_predicted_rf, size=10, color="red", alpha=0.5, legend="RF")
+
+    show(plot)
+
+
 def metric_to_string(metric):
     return str(round(metric, 4))

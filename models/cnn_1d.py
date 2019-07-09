@@ -1,3 +1,5 @@
+import random
+
 from keras import Model
 from keras.callbacks import EarlyStopping, History
 from keras.layers import Dense
@@ -20,12 +22,13 @@ class Cnn1DModel(BaseModel):
         model.add(Flatten())
         model.add(Dense(16, activation='relu'))
         model.add(Dense(16, activation='relu'))
-        model.add(Dense(1))
-        model.compile(optimizer='adadelta', loss='mean_squared_error', metrics=['accuracy'])
+        model.add(Dense(1, activation='sigmoid'))
+        model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
         return model
 
     def fit(self) -> History:
-        ea = EarlyStopping(monitor='loss', patience=10, restore_best_weights=True)
+        random.seed(1337)
+        ea = EarlyStopping(monitor='loss', patience=20, restore_best_weights=True)
         return self.model.fit(self.reshape_x_model(self.x_train), self.y_train,
                               epochs=500,
                               batch_size=16,
