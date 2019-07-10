@@ -2,6 +2,7 @@ from keras import Model
 from keras.callbacks import EarlyStopping, History
 from keras.layers import Dense
 from keras.models import Sequential
+from keras.wrappers.scikit_learn import KerasRegressor
 
 from models.base_model import BaseModel
 
@@ -18,11 +19,12 @@ class AnnModel(BaseModel):
         model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
         return model
 
-    def fit(self) -> History:
+    def fit(self):
         ea = EarlyStopping(monitor='loss', patience=20, restore_best_weights=True)
-        return self.model.fit(self.x_train, self.y_train,
-                              epochs=1500,
-                              batch_size=16,
-                              verbose=1,
-                              shuffle=1,
-                              callbacks=[ea]).history
+        self.model = KerasRegressor(build_fn=self.build_model,
+                                    epochs=1500,
+                                    batch_size=16,
+                                    verbose=0,
+                                    shuffle=1,
+                                    callbacks=[ea])
+        self.model.fit(self.x_train, self.y_train)

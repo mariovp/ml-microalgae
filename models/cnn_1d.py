@@ -1,11 +1,11 @@
 from keras import Model
-from keras.callbacks import EarlyStopping, History
-from keras.layers import Dense
+from keras.callbacks import EarlyStopping
+from keras.layers import Dense, Reshape
 from keras.layers import Flatten
 from keras.layers.convolutional import Conv1D
 from keras.layers.convolutional import MaxPooling1D
 from keras.models import Sequential
-from numpy import ndarray
+from keras.wrappers.scikit_learn import KerasRegressor
 
 from models.base_model import BaseModel
 
@@ -15,6 +15,7 @@ class Cnn1DModel(BaseModel):
 
     def build_model(self) -> Model:
         model = Sequential()
+        model.add(Reshape((self.x_train.shape[1], 1)))
         model.add(Conv1D(filters=32, kernel_size=3, activation='relu'))
         model.add(MaxPooling1D(pool_size=2))
         model.add(Flatten())
@@ -24,17 +25,12 @@ class Cnn1DModel(BaseModel):
         model.compile(optimizer='adam', loss='mean_squared_error', metrics=['accuracy'])
         return model
 
-    def fit(self) -> History:
+    def fit(self):
         ea = EarlyStopping(monitor='loss', patience=20, restore_best_weights=True)
-        return self.model.fit(self.reshape_x_model(self.x_train), self.y_train,
-                              epochs=500,
-                              batch_size=16,
-                              verbose=1,
-                              shuffle=1,
-                              callbacks=[ea]).history
+        self.model = KerasRegressor(build_fn=self.build_model, epochs=400,
+                                    batch_size=16,
+                                    verbose=0,
+                                    shuffle=1,
+                                    callbacks=[ea])
+        self.model.fit(self.x_train, self.y_train)
 
-    def reshape_x_model(self, x_array: ndarray) -> ndarray:
-        return x_array.reshape((x_array.shape[0], x_array.shape[1], 1))
-
-    def reshape_x_original(self, x_array: ndarray) -> ndarray:
-        return x_array.reshape((x_array.shape[0], x_array.shape[1]))

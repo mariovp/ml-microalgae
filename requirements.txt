@@ -1,3 +1,4 @@
+eli5
 bokeh
 pandas
 sklearn

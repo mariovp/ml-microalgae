@@ -19,6 +19,8 @@ files = os.listdir(path)
 x = list()
 y = list()
 
+filepath = ''
+
 for file in files:
     filepath = os.path.join(path, file)
     dataframe = pp.read_csv(filepath)
@@ -29,6 +31,10 @@ for file in files:
     x.extend(xn.values)
     y.extend(yn.values)
 
+feature_names = pp.get_feature_names(filepath)
+print(feature_names)
+print(type(feature_names))
+
 x = np.array(x, dtype='float64')
 y = np.array(y, dtype='float64')
 
@@ -37,7 +43,7 @@ y_normalized, y_scaler = pp.normalize(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.25, random_state=1337)
 
-model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler)
+model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler, feature_names)
 
 ann = AnnModel(model_data)
 cnn = Cnn1DModel(model_data)
@@ -58,5 +64,8 @@ for model in models:
 
 for model in models:
     model.evaluate()
+
+for model in models:
+    model.show_feature_importance()
 
 plot_comparison(ann, cnn, lstm, knn, rf)

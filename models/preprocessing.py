@@ -54,3 +54,9 @@ def normalize(_dataframe):
     _scaler.fit(_dataframe)
     _array_scaled = _scaler.transform(_dataframe)
     return _array_scaled, _scaler
+
+
+def get_feature_names(_filename):
+    _dataframe = read_csv(_filename)
+    _dataframe = _dataframe.drop(columns=['day'])
+    return [i for i in _dataframe.columns]

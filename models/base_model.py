@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 
+import eli5
 import numpy as np
+from eli5.sklearn import PermutationImportance
 from numpy import ndarray
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
@@ -19,6 +21,7 @@ class BaseModel(ABC):
         self.y_test = model_data.y_test
         self.x_scaler = model_data.x_scaler
         self.y_scaler = model_data.y_scaler
+        self.feature_names = model_data.feature_names
 
         self.model = self.build_model()
 
@@ -42,9 +45,9 @@ class BaseModel(ABC):
             self.plot_model_loss(history)
 
     def predict(self, x_predict: ndarray) -> ndarray:
-        x_predict = self.reshape_x_model(x_predict)
         y_predicted = self.model.predict(x_predict)
-        return self.reshape_y_original(y_predicted)
+        y_predicted = y_predicted.reshape(y_predicted.shape[0], 1)
+        return y_predicted
 
     def plot_model_loss(self, history):
         plot_model_loss(history, self.name)
@@ -58,18 +61,6 @@ class BaseModel(ABC):
         y_predicted_descaled = self.y_scaler.inverse_transform(y_predicted)
         y_real_descaled = self.y_scaler.inverse_transform(self.y_test)
         plot_bokeh(y_real_descaled, y_predicted_descaled, self.name, mse)
-
-    def reshape_x_model(self, x_array: ndarray) -> ndarray:
-        return x_array
-
-    def reshape_y_model(self, y_array: ndarray) -> ndarray:
-        return y_array
-
-    def reshape_x_original(self, x_array: ndarray) -> ndarray:
-        return x_array
-
-    def reshape_y_original(self, y_array: ndarray) -> ndarray:
-        return y_array
 
     def get_mse(self):
         y_predicted = self.predict(self.x_test)
@@ -90,4 +81,14 @@ class BaseModel(ABC):
         print("R2 Score = " + metric_to_string(r2))
 
         self.plot_real_vs_predicted(mse)
+
+    def get_eli5_model(self):
+        return self.model
+
+    def show_feature_importance(self):
+        print("\n\n\n\n+++++++++++++++++++++++++++++++")
+        print('Calculating feature importance for model ', self.name, "...")
+        perm = PermutationImportance(self.get_eli5_model(), random_state=1).fit(self.x_test, self.y_test)
+        print(self.name, 'model feature importance')
+        print(eli5.format_as_text(eli5.explain_weights(perm, feature_names=self.feature_names)))
 

@@ -14,6 +14,7 @@ class ModelData(NamedTuple):
         y_test: Test targets
         x_scaler: Scaler to return x data to original domain
         y_scaler: Scaler to return y data to original domain
+        feature_names: Contains the names of features used for model training
     """
     x_train: ndarray
     x_test: ndarray
@@ -21,3 +22,4 @@ class ModelData(NamedTuple):
     y_test: ndarray
     x_scaler: MinMaxScaler
     y_scaler: MinMaxScaler
+    feature_names: list
