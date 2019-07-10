@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+import numpy as np
 from numpy import ndarray
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
@@ -35,6 +36,7 @@ class BaseModel(ABC):
         pass
 
     def train(self, show_history=False):
+        np.random.seed(1)  # for reproducibility
         history = self.fit()
         if show_history and history is not None:
             self.plot_model_loss(history)
@@ -70,11 +72,11 @@ class BaseModel(ABC):
         return y_array
 
     def get_mse(self):
-        y_predicted = self.predict(self.reshape_x_model(self.x_test))
+        y_predicted = self.predict(self.x_test)
         return mean_squared_error(self.y_test, y_predicted)
 
     def evaluate(self):
-        y_predicted = self.predict(self.reshape_x_model(self.x_test))
+        y_predicted = self.predict(self.x_test)
 
         mse = mean_squared_error(self.y_test, y_predicted)
         mae = mean_absolute_error(self.y_test, y_predicted)
