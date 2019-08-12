@@ -23,8 +23,6 @@ class BaseModel(ABC):
         self.y_scaler = model_data.y_scaler
         self.feature_names = model_data.feature_names
 
-        self.model = self.build_model()
-
     @property
     @abstractmethod
     def name(self):
@@ -39,7 +37,6 @@ class BaseModel(ABC):
         pass
 
     def train(self, show_history=False):
-        np.random.seed(1)  # for reproducibility
         history = self.fit()
         if show_history and history is not None:
             self.plot_model_loss(history)

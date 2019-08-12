@@ -1,5 +1,5 @@
 from keras import Model
-from keras.callbacks import EarlyStopping, History
+from keras.callbacks import EarlyStopping
 from keras.layers import Dense
 from keras.models import Sequential
 from keras.wrappers.scikit_learn import KerasRegressor
@@ -12,7 +12,7 @@ class AnnModel(BaseModel):
 
     def build_model(self) -> Model:
         model = Sequential()
-        model.add(Dense(2, activation='relu'))
+        model.add(Dense(2, activation='relu', input_shape=(18,)))
         model.add(Dense(20, activation='relu'))
         model.add(Dense(20, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))

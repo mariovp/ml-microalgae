@@ -37,7 +37,7 @@ def plot_bokeh(_real, _predicted, _model_title, _mse):
     title = "Real vs Predicted values (mse="+str(round(_mse, 4))+")"
 
     # create a new plot
-    s1 = figure(width=800, plot_height=600, title=title, x_axis_label='Observation #', y_axis_label='Carbohydrates %')
+    s1 = figure(width=900, plot_height=600, title=title, x_axis_label='Observation #', y_axis_label='Carbohydrates %')
     s1.line(x, _real, color="green")
     s1.circle(x, _real, legend="Real", fill_color="green", line_color="green", size=6)
     s1.line(x, _predicted, color="orange", line_dash="4 4")

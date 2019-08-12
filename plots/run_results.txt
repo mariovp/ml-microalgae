@@ -1,0 +1,156 @@
+<Model Evaluation>
+ANN
+MSE = 0.0043
+MAE = 0.052
+R2 Score = 0.8403
+
+<Model Evaluation>
+CNN 1D
+MSE = 0.0028
+MAE = 0.0404
+R2 Score = 0.8966
+
+<Model Evaluation>
+LSTM
+MSE = 0.0036
+MAE = 0.0479
+R2 Score = 0.8646
+
+<Model Evaluation>
+KNN
+MSE = 0.0085
+MAE = 0.0764
+R2 Score = 0.6831
+
+<Model Evaluation>
+Random Forest
+MSE = 0.0046
+MAE = 0.0481
+R2 Score = 0.8286
+
++++++++++++++++++++++++++++++++
+Calculating feature importance for model  ANN ...
+ANN model feature importance
+
+0.0426 ± 0.0121  Carbohydrates
+0.0273 ± 0.0161  Protozoa
+0.0110 ± 0.0114  Green algae
+0.0050 ± 0.0057  Diatom
+0.0025 ± 0.0035  TIN-Influent
+0.0022 ± 0.0008  TIP-Influent
+0.0016 ± 0.0040  TON-effluent
+0.0015 ± 0.0028  Cyanobacteria
+0.0013 ± 0.0015  TIC-Influent
+0.0012 ± 0.0012  TIN-effluent
+0.0009 ± 0.0008  TIP-effluent
+0.0008 ± 0.0008  TIC-effluent
+0.0002 ± 0.0005  TOP-effluent
+0.0001 ± 0.0007  TOP-Influent
+0.0000 ± 0.0003  TOC-Influent
+-0.0000 ± 0.0001 TOC-effluent
+-0.0001 ± 0.0003 TON-Influent
+-0.0004 ± 0.0008 Biomass
+
+
+
+
++++++++++++++++++++++++++++++++
+Calculating feature importance for model  CNN 1D ...
+CNN 1D model feature importance
+
+0.0504 ± 0.0106  Carbohydrates
+0.0024 ± 0.0018  Green algae
+0.0012 ± 0.0009  Diatom
+0.0008 ± 0.0007  Cyanobacteria
+0.0007 ± 0.0005  TIC-effluent
+0.0003 ± 0.0009  Protozoa
+0.0002 ± 0.0004  TON-effluent
+0.0001 ± 0.0007  Biomass
+0.0001 ± 0.0002  TIN-Influent
+0.0001 ± 0.0002  TIN-effluent
+0.0001 ± 0.0002  TOP-effluent
+0.0001 ± 0.0001  TOP-Influent
+0.0000 ± 0.0001  TIP-Influent
+0.0000 ± 0.0002  TOC-effluent
+-0.0000 ± 0.0001  TIC-Influent
+-0.0000 ± 0.0001  TON-Influent
+-0.0001 ± 0.0001  TIP-effluent
+-0.0002 ± 0.0001  TOC-Influent
+
+
+
+
++++++++++++++++++++++++++++++++
+Calculating feature importance for model  LSTM ...
+LSTM model feature importance
+
+0.0425 ± 0.0117  Carbohydrates
+0.0010 ± 0.0005  TIC-effluent
+0.0008 ± 0.0009  TIP-Influent
+0.0007 ± 0.0007  Green algae
+0.0005 ± 0.0005  TON-effluent
+0.0003 ± 0.0011  Diatom
+0.0003 ± 0.0001  TOP-Influent
+0.0003 ± 0.0004  TIC-Influent
+0.0002 ± 0.0002  TIN-Influent
+0.0001 ± 0.0001  TOC-effluent
+-0.0000 ± 0.0000  TOP-effluent
+-0.0000 ± 0.0005  TIN-effluent
+-0.0000 ± 0.0006  Cyanobacteria
+-0.0001 ± 0.0001  Protozoa
+-0.0001 ± 0.0001  TOC-Influent
+-0.0001 ± 0.0001  TIP-effluent
+-0.0002 ± 0.0004  TON-Influent
+-0.0005 ± 0.0002  Biomass
+
+
+
+
++++++++++++++++++++++++++++++++
+Calculating feature importance for model  KNN ...
+KNN model feature importance
+
+0.7113 ± 0.3089  Carbohydrates
+0.1073 ± 0.1257  TIN-Influent
+0.0690 ± 0.0620  Biomass
+0.0675 ± 0.0876  TIC-Influent
+0.0333 ± 0.0843  TOC-Influent
+0.0295 ± 0.0426  TOP-Influent
+0.0227 ± 0.0387  TIN-effluent
+0.0192 ± 0.0147  Protozoa
+0.0167 ± 0.0435  TON-Influent
+0.0162 ± 0.0530  Cyanobacteria
+0.0120 ± 0.0337  Diatom
+0.0092 ± 0.0780  TIP-Influent
+0.0084 ± 0.0005  TIC-effluent
+0.0077 ± 0.0137  Green algae
+0.0050 ± 0.0083  TIP-effluent
+0.0031 ± 0.0081  TON-effluent
+-0.0001 ± 0.0006  TOP-effluent
+-0.0062 ± 0.0000  TOC-effluent
+
+
+
+
++++++++++++++++++++++++++++++++
+Calculating feature importance for model  Random Forest ...
+Random Forest model feature importance
+
+1.8948 ± 0.5586  Carbohydrates
+0.0155 ± 0.0161  Green algae
+0.0062 ± 0.0031  TIC-effluent
+0.0053 ± 0.0104  Cyanobacteria
+0.0023 ± 0.0064  Biomass
+0.0015 ± 0.0036  TOP-Influent
+0.0014 ± 0.0040  TON-Influent
+0.0006 ± 0.0043  Protozoa
+0.0006 ± 0.0009  TIN-effluent
+0.0001 ± 0.0008  TOC-effluent
+-0.0002 ± 0.0015  TOP-effluent
+-0.0004 ± 0.0088  TIP-Influent
+-0.0006 ± 0.0020  TOC-Influent
+-0.0007 ± 0.0035  TIN-Influent
+-0.0017 ± 0.0012  TON-effluent
+-0.0018 ± 0.0031  TIC-Influent
+-0.0020 ± 0.0068  TIP-effluent
+-0.0083 ± 0.0061  Diatom

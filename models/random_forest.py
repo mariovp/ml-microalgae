@@ -2,10 +2,15 @@ from numpy import ndarray
 from sklearn.ensemble import RandomForestRegressor
 
 from models.base_model import BaseModel
+from models.model_data import ModelData
 
 
 class RandomForest(BaseModel):
     name = 'Random Forest'
+
+    def __init__(self, model_data: ModelData) -> None:
+        super().__init__(model_data)
+        self.model = self.build_model()
 
     def build_model(self):
         return RandomForestRegressor(n_estimators=150, random_state=0)

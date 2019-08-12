@@ -11,6 +11,7 @@ from models.lstm import LstmModel
 from models.model_data import ModelData
 from models.model_utils import plot_comparison
 from models.random_forest import RandomForest
+from models.random_config import set_random_seed
 
 path = 'data/'
 
@@ -41,9 +42,16 @@ y = np.array(y, dtype='float64')
 x_normalized, x_scaler = pp.normalize(x)
 y_normalized, y_scaler = pp.normalize(y)
 
+print(x_normalized.shape)
+
 x_train, x_test, y_train, y_test = train_test_split(x_normalized, y_normalized, test_size=0.25, random_state=1337)
 
+print("Train size = ", x_train.shape[0])
+print("Test size = ", x_test.shape[0])
+
 model_data = ModelData(x_train, x_test, y_train, y_test, x_scaler, y_scaler, feature_names)
+
+set_random_seed(1)
 
 ann = AnnModel(model_data)
 cnn = Cnn1DModel(model_data)
@@ -67,5 +75,3 @@ for model in models:
 
 for model in models:
     model.show_feature_importance()
-
-plot_comparison(ann, cnn, lstm, knn, rf)
